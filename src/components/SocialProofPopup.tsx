@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, X } from "lucide-react";
 
 const notifications = [
-  { name: "María G.", location: "Madrid", product: "Auriculares Inalámbricos", time: "Hace 2 min" },
-  { name: "Carlos M.", location: "Barcelona", product: "Smartwatch Ultra", time: "Hace 5 min" },
-  { name: "Laura P.", location: "Valencia", product: "Lámpara Luna 3D", time: "Hace 12 min" },
-  { name: "David R.", location: "Sevilla", product: "Masajeador Cervical", time: "Hace 15 min" },
-  { name: "Ana S.", location: "Bilbao", product: "Tira LED RGB", time: "Hace 22 min" }
+  { name: "María G.", location: "Madrid", product: "Humidificador gotas antigravedad", time: "Hace 2 min" },
+  { name: "Carlos M.", location: "Barcelona", product: "Arona Pro Smartwatch", time: "Hace 5 min" },
+  { name: "Laura P.", location: "Valencia", product: "PISTOLA PARA PINTAR ELÉCTRICA", time: "Hace 12 min" },
+  { name: "David R.", location: "Sevilla", product: "Masajeador de cuello electromagnético", time: "Hace 15 min" },
+  { name: "Ana S.", location: "Bilbao", product: "Faja Colombiana push up", time: "Hace 22 min" }
 ];
 
 export default function SocialProofPopup() {

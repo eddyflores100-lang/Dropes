@@ -1,0 +1,45 @@
+{
+  "name": "orderCreate",
+  "args": [
+    {
+      "name": "shop_id",
+      "type": {
+        "kind": "NON_NULL",
+        "name": null,
+        "ofType": {
+          "kind": "SCALAR",
+          "name": "Int",
+          "ofType": null
+        }
+      }
+    },
+    {
+      "name": "payment_method",
+      "type": {
+        "kind": "ENUM",
+        "name": "PaymentMethodEnum",
+        "ofType": null
+      }
+    },
+    {
+      "name": "customer",
+      "type": {
+        "kind": "INPUT_OBJECT",
+        "name": "CustomerInputType",
+        "ofType": null
+      }
+    },
+    {
+      "name": "products",
+      "type": {
+        "kind": "LIST",
+        "name": null,
+        "ofType": {
+          "kind": "INPUT_OBJECT",
+          "name": "OrderProductInputType",
+          "ofType": null
+        }
+      }
+    }
+  ]
+}

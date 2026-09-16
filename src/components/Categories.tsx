@@ -1,64 +1,45 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Smartphone, Home, Sparkles, Trophy, Utensils, Baby } from "lucide-react";
 
 const categories = [
-  {
-    id: 1,
-    name: "Tecnología",
-    image: "https://picsum.photos/seed/cat1/600/800",
-    items: "124 productos"
-  },
-  {
-    id: 2,
-    name: "Hogar",
-    image: "https://picsum.photos/seed/cat2/600/800",
-    items: "86 productos"
-  },
-  {
-    id: 3,
-    name: "Belleza",
-    image: "https://picsum.photos/seed/cat3/600/800",
-    items: "52 productos"
-  },
-  {
-    id: 4,
-    name: "Deporte",
-    image: "https://picsum.photos/seed/cat4/600/800",
-    items: "93 productos"
-  }
+  { id: 1, name: "Tecnología", icon: Smartphone, color: "bg-blue-50 text-blue-600 border-blue-100" },
+  { id: 2, name: "Hogar", icon: Home, color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+  { id: 3, name: "Belleza", icon: Sparkles, color: "bg-pink-50 text-pink-600 border-pink-100" },
+  { id: 4, name: "Deporte", icon: Trophy, color: "bg-orange-50 text-orange-600 border-orange-100" },
+  { id: 5, name: "Cocina", icon: Utensils, color: "bg-amber-50 text-amber-600 border-amber-100" },
+  { id: 6, name: "Niños", icon: Baby, color: "bg-purple-50 text-purple-600 border-purple-100" },
 ];
 
-export default function Categories() {
+export default function Categories({ onSelectCategory }: { onSelectCategory?: (cat: string) => void }) {
   return (
-    <section className="py-16 lg:py-24 bg-zinc-50">
+    <section className="py-10 sm:py-24 bg-white" id="categorias">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-end mb-10 gap-4">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-zinc-900">
-              Categorías
-            </h2>
-            <p className="mt-2 text-zinc-500">Encuentra exactamente lo que buscas.</p>
-          </div>
+        <div className="text-center mb-12">
+          <h2 className="text-2xl sm:text-4xl font-black tracking-tighter italic text-zinc-900 mb-4 uppercase">
+            Explora por Categoría
+          </h2>
+          <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl mx-auto">
+            Iconos diseñados para una navegación rápida y sencilla por todo nuestro catálogo.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
           {categories.map(category => (
-            <a key={category.id} href="#" className="group relative h-64 sm:h-80 rounded-3xl overflow-hidden block">
-              <img 
-                src={category.image} 
-                alt={category.name} 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-zinc-900/20 to-transparent"></div>
-              
-              <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-white mb-1">{category.name}</h3>
-                  <p className="text-sm text-zinc-300">{category.items}</p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-2 group-hover:bg-white group-hover:text-zinc-900">
-                  <ArrowRight className="w-5 h-5" />
-                </div>
+            <a 
+              key={category.id} 
+              href="#products-section" 
+              onClick={(e) => {
+                if (onSelectCategory) {
+                  onSelectCategory(category.name);
+                }
+              }}
+              className={`group flex flex-col items-center justify-center p-4 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-xl ${category.color}`}
+            >
+              <div className="mb-2 sm:mb-4 transform transition-transform group-hover:rotate-12">
+                <category.icon className="w-8 h-8 sm:w-10 sm:h-10" />
+              </div>
+              <h3 className="text-sm sm:text-lg font-black text-zinc-900">{category.name}</h3>
+              <div className="mt-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-xs font-bold uppercase tracking-wider">
+                Ver todo <ArrowRight className="w-3 h-3" />
               </div>
             </a>
           ))}
