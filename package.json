@@ -1,7 +1,7 @@
 {
-  "name": "react-example",
+  "name": "dropes-storefront",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
@@ -35,5 +35,14 @@
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "description": "Responsive React storefront prototype for Spain and Portugal; checkout intentionally disabled pending secure backend integration.",
+  "homepage": "https://github.com/eddyflores100-lang/Dropes#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eddyflores100-lang/Dropes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eddyflores100-lang/Dropes/issues"
   }
 }
