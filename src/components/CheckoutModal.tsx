@@ -9,8 +9,7 @@ interface CheckoutModalProps {
   onClearCart: () => void;
 }
 
-const DROPEA_API_KEY = "AIzaP1ltDwuOh4UrOGMxtm66iImf4SNdiGHlYhcSAmRW8HE=";
-const SHOP_ID = 12928;
+// Live orders must be submitted by a trusted server-side integration.
 
 const SPAIN_PROVINCES = [
   "Madrid", "Barcelona", "Valencia", "Sevilla", "Zaragoza", "Málaga", "Murcia", "Palma de Mallorca", "Las Palmas", "Bilbao", "Alicante", "Córdoba", "Valladolid", "Vigo", "Gijón", "Hospitalet", "Vitoria", "A Coruña", "Granada", "Elche"
@@ -50,63 +49,7 @@ export default function CheckoutModal({ cart, onClose, onUpdateQuantity, onClear
   };
 
   const submitOrderToDropea = async () => {
-    setLoading(true);
-    setError(null);
-
-    const query = `
-      mutation CreateOrder($shop_id: Int!, $payment_method: PaymentMethodEnum!, $customer: CustomerInputType!, $products: [OrderProductInputType!]!) {
-        orderCreate(shop_id: $shop_id, payment_method: $payment_method, customer: $customer, products: $products) {
-          id
-        }
-      }
-    `;
-
-    const variables = {
-      shop_id: SHOP_ID,
-      payment_method: paymentMethod === "cod" ? "CASH_ON_DELIVERY" : "CARD",
-      customer: {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        city: formData.city,
-        zip: formData.zip,
-        country: formData.country as any // ES or PT
-      },
-      products: cart.map(item => ({
-        product_id: parseInt(item.id),
-        unit_price: parseFloat(item.priceNow.toString().replace(',', '.')),
-        quantity: item.quantity,
-        total_value: parseFloat(item.priceNow.toString().replace(',', '.')) * item.quantity
-      }))
-    };
-
-    try {
-      const response = await fetch('https://api.dropea.com/graphql/dropshippers', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': DROPEA_API_KEY
-        },
-        body: JSON.stringify({ query, variables })
-      });
-
-      const result = await response.json();
-      
-      if (result.errors) {
-        throw new Error(result.errors[0].message);
-      }
-
-      setSavedTotal(getSubtotal());
-      setStep("success");
-      onClearCart();
-    } catch (err: any) {
-      setError(err.message || "Error al conectar con el servidor. Inténtelo de nuevo.");
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
+    setError("El checkout está desactivado en esta versión de demostración. No introduzcas datos personales ni intentes realizar un pedido real.");
   };
 
   return (
@@ -265,7 +208,11 @@ export default function CheckoutModal({ cart, onClose, onUpdateQuantity, onClear
                 </div>
               )}
 
+              <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-900">
+                Checkout de demostración: los pedidos y pagos todavía no están habilitados. No introduzcas datos personales.
+              </div>
               <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); submitOrderToDropea(); }}>
+                <fieldset disabled className="space-y-4 opacity-60">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <span className="text-[10px] font-black text-zinc-400 uppercase ml-2">Nombre</span>
@@ -306,17 +253,12 @@ export default function CheckoutModal({ cart, onClose, onUpdateQuantity, onClear
                 
                 <button 
                   type="submit"
-                  disabled={loading}
+                  disabled={true}
                   className={`w-full text-white py-4 sm:py-6 rounded-[1.5rem] sm:rounded-[2rem] font-black transition-all active:scale-[0.95] disabled:opacity-50 mt-4 sm:mt-8 flex items-center justify-center gap-3 text-lg sm:text-xl shadow-2xl ${paymentMethod === 'cod' ? 'bg-red-600 hover:bg-red-700 shadow-red-600/30' : 'bg-zinc-900 hover:bg-zinc-800 shadow-zinc-900/30'}`}
                 >
-                  {loading ? (
-                    <Loader2 className="w-8 h-8 animate-spin" />
-                  ) : (
-                    <>
-                      {paymentMethod === 'cod' ? "Confirmar Pedido" : "Ir al Pago"}
-                    </>
-                  )}
+                  Pedidos no disponibles todavía
                 </button>
+                  </fieldset>
               </form>
 
               <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
